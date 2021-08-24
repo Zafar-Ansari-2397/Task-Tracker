@@ -5,45 +5,25 @@ import AddTask from "./components/AddTask";
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false);
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    const localData = localStorage.getItem("tasks");
+    return localData ? JSON.parse(localData) : [];
+  });
 
+  // Add in Local Storage
   useEffect(() => {
-    const getTasks = async () => {
-      const tasksFromServer = await fetchTasks();
-      setTasks(tasksFromServer);
-    };
-    getTasks();
-  }, []);
-
-  // Fetch Tasks
-  const fetchTasks = async () => {
-    const res = await fetch("http://localhost:5000/tasks");
-    const data = await res.json();
-
-    return data;
-  };
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   // Add Task
   const addTask = async (task) => {
-    const res = await fetch("http://localhost:5000/tasks", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(task),
-    });
-
-    const data = await res.json();
-
-    setTasks([...tasks, data]);
-    // const id = Math.floor(Math.random() * 1000) + 1;
-    // const newTask = { id, ...task };
-    // setTasks([...tasks, newTask]);
+    const id = Math.floor(Math.random() * 1000) + 1;
+    const newTask = { id, ...task };
+    setTasks([...tasks, newTask]);
   };
 
   // Delete Task
   const deleteTask = async (id) => {
-    await fetch(`http://localhost:5000/tasks/${id}`, { method: "DELETE" });
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
