@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "text": "Watch Series ",
+      "date": "20 Aug 2021",
+      "reminder": true
+    },
+    {
+      "id": 2,
+      "text": "Play Game ",
+      "date": "20 Aug 2021",
+      "reminder": true
+    },
+    {
+      "text": "Shopping",
+      "date": "Today at 6 o'Clock",
+      "reminder": true,
+      "id": 3
+    }
+  ]
+}
